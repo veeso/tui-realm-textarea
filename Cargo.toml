@@ -1,6 +1,6 @@
 [package]
 name = "tui-realm-textarea"
-version = "1.1.1"
+version = "1.2.0"
 authors = ["Christian Visintin"]
 edition = "2021"
 categories = ["command-line-utilities"]
@@ -14,22 +14,35 @@ readme = "README.md"
 repository = "https://github.com/veeso/tui-realm-textarea"
 
 [dependencies]
-cli-clipboard = { version = "^0.2.1", optional = true }
-lazy-regex = "^2.3.0"
-tuirealm = { version = "^1.8.0", default-features = false, features = [ "derive" ]}
-tui-textarea = "^0.1.6"
+cli-clipboard = { version = "^0.4", optional = true }
+lazy-regex = "^3"
+tuirealm = { version = "^1.9.0", default-features = false, features = [
+  "derive",
+] }
+tui-textarea = { version = "^0.2", default-features = false }
 
 [dev-dependencies]
-crossterm = "^0.25"
+crossterm = "^0.27"
 pretty_assertions = "^1.0.0"
 tui-realm-stdlib = "^1.1.6"
 
 [features]
-default = [ "with-crossterm" ]
-clipboard = [ "cli-clipboard" ]
-search = [ "tui-textarea/search" ]
-with-crossterm = [ "tuirealm/with-crossterm" ]
-with-termion = [ "tuirealm/with-termion" ]
+default = ["ratatui-crossterm"]
+clipboard = ["cli-clipboard"]
+ratatui = ["tuirealm/ratatui"]
+ratatui-crossterm = [
+  "ratatui",
+  "tuirealm/crossterm",
+  "tui-textarea/ratatui-crossterm",
+]
+ratatui-termion = [
+  "ratatui",
+  "tuirealm/termion",
+  "tui-textarea/ratatui-termion",
+]
+tui = ["tuirealm/tui"]
+tui-crossterm = ["tui", "tuirealm/crossterm", "tui-textarea/crossterm"]
+tui-termion = ["ratatui", "tuirealm/termion", "tui-textarea/termion"]
 
 [[example]]
 name = "demo"
